@@ -17,18 +17,6 @@ private:
     LinkedList<Book> books;
 
 public:
-    void LibraryManager::displayBooks() {
-
-        Node<Book>* current = books.getHead();
-
-        while (current != nullptr) {
-
-            current->data.displayBook();
-
-            current = current->next;
-        }
-    }
-
     // Add Book
     void addBook(Book book) {
         books.insert(book);
@@ -41,11 +29,23 @@ public:
 
     // Display All Books
     void displayBooks() {
-        if (books.isEmpty()) {
-            cout << endl;
-            cout << "[INFO] No books available." << endl;
-            return;
-        }
+
+    if (books.isEmpty()) {
+
+        cout << endl;
+        cout << "[INFO] No books available." << endl;
+
+        return;
+    }
+
+    Node<Book>* current = books.getHead();
+
+    while (current != nullptr) {
+
+        current->data.displayBook();
+
+        current = current->next;
+    }
     }
 
     // Search Book By ID
