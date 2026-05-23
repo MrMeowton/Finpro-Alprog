@@ -1,10 +1,8 @@
 #include <iostream>
-
 #include "models/Book.h"
 #include "models/Admin.h"
 #include "models/Member.h"
 #include "models/Transaction.h"
-
 #include "managers/LibraryManager.h"
 #include "managers/UserManager.h"
 #include "managers/TransactionManager.h"

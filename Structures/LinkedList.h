@@ -55,16 +55,6 @@ public:
         current->next = newNode;
     }
 
-    // Display List
-    void display() const {
-        Node<T>* current = head;
-
-        while (current != nullptr) {
-            current->data.displayBook();
-            current = current->next;
-        }
-    }
-
     // Get Head
     Node<T>* getHead() const {
         return head;

@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include <vector>
-
 #include "../models/Book.h"
 #include "../structures/LinkedList.h"
 #include "../algorithms/Searching.h"
@@ -18,6 +17,18 @@ private:
     LinkedList<Book> books;
 
 public:
+    void LibraryManager::displayBooks() {
+
+        Node<Book>* current = books.getHead();
+
+        while (current != nullptr) {
+
+            current->data.displayBook();
+
+            current = current->next;
+        }
+    }
+
     // Add Book
     void addBook(Book book) {
         books.insert(book);
@@ -35,8 +46,6 @@ public:
             cout << "[INFO] No books available." << endl;
             return;
         }
-
-        books.display();
     }
 
     // Search Book By ID

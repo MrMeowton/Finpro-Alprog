@@ -1,7 +1,6 @@
 #pragma once
 
 #include <iostream>
-
 #include "../models/Admin.h"
 #include "../models/Member.h"
 

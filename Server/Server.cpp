@@ -1,16 +1,14 @@
 #include <iostream>
 #include <thread>
-
 #include <winsock2.h>
 #include <ws2tcpip.h>
-
 #include "../networking/SocketHandler.h"
 #include "../networking/JsonHandler.h"
-
 #include "../managers/LibraryManager.h"
-
 #include "../networking/json.hpp"
+#include <mutex>
 
+mutex libraryMutex;
 using json = nlohmann::json;
 using namespace std;
 
@@ -24,31 +22,60 @@ void handleClient(SOCKET clientSocket, LibraryManager* library) {
     }
 
     string requestString(buffer, bytesReceived);
-    json request = json::parse(requestString);
+    json request;
+    try {
+        request = json::parse(requestString);
+    }
+    catch (...) {
+        string errorResponse = JsonHandler::createResponse("failed", "Invalid JSON format");
+
+        send(clientSocket, errorResponse.c_str(), errorResponse.size(), 0);
+        closesocket(clientSocket);
+
+        return;
+    }
+
     string action = request["action"];
 
     cout << endl;
     cout << "[CLIENT REQUEST] " << requestString << endl;
 
     // SEARCH REQUEST
-
     if (action == "search") {
-        string keyword = request["keyword"];
-        vector<Book> books = library->convertToVector();
-        Book* result = Searching::linearSearchByTitle(books, keyword);
-        string response;
-
-        if (result == nullptr) {
-            response = JsonHandler::createResponse("failed", "Book not found");
-        } else {
-            response = JsonHandler::createResponse("success", "Book found");
-        }
-
-        send(clientSocket, response.c_str(), response.size(), 0);
+    string keyword = request["keyword"];
+    vector<Book> books;
+    {
+        lock_guard<mutex> lock(libraryMutex);
+        books = library->convertToVector();
     }
 
+    sort(books.begin(), books.end(), [](Book a, Book b) {return a.getTitle() < b.getTitle();});
+    Book* result = Searching::binarySearchByTitle( books, keyword);
+    json response;
+
+    if (result == nullptr) {
+        response["status"] = "failed";
+        response["message"] = "Book not found";
+    }else {
+        response["status"] = "success";
+        response["message"] = "Book found";
+        response["book"]["id"] = result->getId();
+        response["book"]["title"] = result->getTitle();
+        response["book"]["author"] = result->getAuthor();
+        response["book"]["stock"] = result->getStock();
+    }
+
+    string responseString = response.dump();
+    send(clientSocket, responseString.c_str(), responseString.size(), 0);
+    }
+
+    // VIEW REQUEST
     if (action == "view") {
-    vector<Book> books = library->convertToVector();
+    vector<Book> books;
+    {
+        lock_guard<mutex> lock(libraryMutex);
+        books = library->convertToVector();
+    }
     json response;
     response["status"] = "success";
     response["books"] = json::array();
@@ -68,9 +95,15 @@ void handleClient(SOCKET clientSocket, LibraryManager* library) {
     send(clientSocket, responseString.c_str(), responseString.size(), 0);
     }
 
+    // BORROW REQUEST
     if (action == "borrow") {
     int bookId = request["book_id"];
-    bool success = library->borrowBook(bookId);
+    bool success;
+    {
+        lock_guard<mutex> lock(libraryMutex);
+        success = library->borrowBook(bookId);
+    }
+
     string response;
 
     if (success) {

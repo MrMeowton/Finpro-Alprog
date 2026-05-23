@@ -1,7 +1,6 @@
 #pragma once
 
 #include <iostream>
-
 #include "../models/Transaction.h"
 #include "../structures/LinkedList.h"
 
