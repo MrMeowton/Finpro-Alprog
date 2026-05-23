@@ -5,6 +5,7 @@
 #include "../networking/SocketHandler.h"
 #include "../networking/JsonHandler.h"
 #include "../managers/LibraryManager.h"
+#include "../managers/UserManager.h"
 #include "../networking/json.hpp"
 #include <mutex>
 
@@ -113,6 +114,40 @@ void handleClient(SOCKET clientSocket, LibraryManager* library) {
     }
 
     send(clientSocket, response.c_str(), response.size(), 0);
+    }
+
+    if (action == "login") {
+
+        string username = request["username"];
+        string password = request["password"];
+
+        UserManager userManager;
+
+        User* user =
+            userManager.login(
+                username,
+                password
+            );
+
+        json response;
+
+        if (user == nullptr) {
+
+            response["status"] = "failed";
+            response["message"] = "Invalid login";
+        }
+        else {
+
+            response["status"] = "success";
+            response["message"] = "Login success";
+        }
+
+        string responseString = response.dump();
+
+        send(clientSocket,
+            responseString.c_str(),
+            responseString.size(),
+            0);
     }
 
     closesocket(clientSocket);
