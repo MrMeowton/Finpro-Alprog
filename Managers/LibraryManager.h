@@ -7,7 +7,10 @@
 #include "../structures/LinkedList.h"
 #include "../algorithms/Searching.h"
 #include "../algorithms/Sorting.h"
+#include <fstream>
+#include "../networking/json.hpp"
 
+using json = nlohmann::json;
 using namespace std;
 
 class LibraryManager {
@@ -21,6 +24,8 @@ public:
 
         cout << endl;
         cout << "[SUCCESS] Book added successfully!" << endl;
+
+        saveBooksToFile();
     }
 
     // Display All Books
@@ -70,6 +75,7 @@ public:
         cout << endl;
         cout << "[SUCCESS] Book borrowed successfully!" << endl;
 
+        saveBooksToFile();
         return true;
     }
 
@@ -171,4 +177,68 @@ public:
     }
     }
 
+    void loadBooksFromFile() {
+
+    ifstream file("data/books.json");
+
+    if (!file.is_open()) {
+
+        cout << "[ERROR] Cannot open books.json!" << endl;
+
+        return;
+    }
+
+    json data;
+
+    file >> data;
+
+    for (auto& item : data) {
+
+        Book book(
+            item["id"],
+            item["title"],
+            item["author"],
+            item["category"],
+            item["stock"]
+        );
+
+        books.insert(book);
+    }
+
+    file.close();
+
+    cout << endl;
+    cout << "[SUCCESS] Books loaded from JSON!" << endl;
+    }
+
+    void saveBooksToFile() {
+
+    json data = json::array();
+
+    Node<Book>* current = books.getHead();
+
+    while (current != nullptr) {
+
+        json item;
+
+        item["id"] = current->data.getId();
+        item["title"] = current->data.getTitle();
+        item["author"] = current->data.getAuthor();
+        item["category"] = current->data.getCategory();
+        item["stock"] = current->data.getStock();
+
+        data.push_back(item);
+
+        current = current->next;
+    }
+
+    ofstream file("data/books.json");
+
+    file << data.dump(4);
+
+    file.close();
+
+    cout << endl;
+    cout << "[SUCCESS] Books saved to JSON!" << endl;
+    }
 };

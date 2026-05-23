@@ -48,4 +48,13 @@ public:
 
         return response.dump();
     }
+
+    static string createViewBooksRequest() {
+
+    json request;
+
+    request["action"] = "view";
+
+    return request.dump();
+    }
 };

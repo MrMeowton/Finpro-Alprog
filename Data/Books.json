@@ -1,0 +1,25 @@
+[
+    {
+        "id": 1,
+        "title": "Clean Code",
+        "author": "Robert Martin",
+        "category": "Programming",
+        "stock": 3
+    },
+
+    {
+        "id": 2,
+        "title": "Algorithms",
+        "author": "CLRS",
+        "category": "Computer Science",
+        "stock": 5
+    },
+
+    {
+        "id": 3,
+        "title": "Design Patterns",
+        "author": "Gang of Four",
+        "category": "Software Engineering",
+        "stock": 2
+    }
+]

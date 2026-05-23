@@ -47,6 +47,41 @@ void handleClient(SOCKET clientSocket, LibraryManager* library) {
         send(clientSocket, response.c_str(), response.size(), 0);
     }
 
+    if (action == "view") {
+    vector<Book> books = library->convertToVector();
+    json response;
+    response["status"] = "success";
+    response["books"] = json::array();
+
+    for (Book& book : books) {
+        json item;
+
+        item["id"] = book.getId();
+        item["title"] = book.getTitle();
+        item["author"] = book.getAuthor();
+        item["stock"] = book.getStock();
+        response["books"].push_back(item);
+    }
+
+    string responseString = response.dump();
+
+    send(clientSocket, responseString.c_str(), responseString.size(), 0);
+    }
+
+    if (action == "borrow") {
+    int bookId = request["book_id"];
+    bool success = library->borrowBook(bookId);
+    string response;
+
+    if (success) {
+        response = JsonHandler::createResponse("success", "Borrow successful");
+    } else {
+        response = JsonHandler::createResponse("failed", "Borrow failed");
+    }
+
+    send(clientSocket, response.c_str(), response.size(), 0);
+    }
+
     closesocket(clientSocket);
 }
 
@@ -70,8 +105,7 @@ int main() {
     // LOCAL DATA
     LibraryManager library;
 
-    library.addBook(Book(1, "Clean Code", "Robert Martin", "Programming", 3));
-    library.addBook(Book(2, "Algorithms", "CLRS", "Computer Science", 5));
+    library.loadBooksFromFile();
    
     // ACCEPT CLIENT LOOP
     while (true) {
