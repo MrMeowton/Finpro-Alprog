@@ -14,6 +14,7 @@ private:
     int stock;
 
 public:
+    // Default Constructor
     Book() {
         id = 0;
         title = "";
@@ -22,6 +23,7 @@ public:
         stock = 0;
     }
 
+    // Parameterized Constructor
     Book(int id, string title, string author, string category, int stock) {
         this->id = id;
         this->title = title;
@@ -30,6 +32,7 @@ public:
         this->stock = stock;
     }
 
+    // Getter
     int getId() const {
         return id;
     }
@@ -50,10 +53,12 @@ public:
         return stock;
     }
 
+    // Setter
     void setStock(int stock) {
         this->stock = stock;
     }
 
+    // Display Book Information
     void displayBook() const {
         cout << "==========================" << endl;
         cout << "Book ID   : " << id << endl;
