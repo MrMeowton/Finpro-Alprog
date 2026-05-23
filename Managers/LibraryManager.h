@@ -1,9 +1,12 @@
 #pragma once
 
 #include <iostream>
+#include <vector>
 
 #include "../models/Book.h"
 #include "../structures/LinkedList.h"
+#include "../algorithms/Searching.h"
+#include "../algorithms/Sorting.h"
 
 using namespace std;
 
@@ -85,4 +88,87 @@ public:
         cout << endl;
         cout << "[SUCCESS] Book returned successfully!" << endl;
     }
+
+    // TAMBAHAN PHASE 3
+    // Convert LinkedList → Vector
+    vector<Book> convertToVector() {
+
+    vector<Book> tempBooks;
+
+    Node<Book>* current = books.getHead();
+
+    while (current != nullptr) {
+
+        tempBooks.push_back(current->data);
+
+        current = current->next;
+    }
+
+    return tempBooks;
+    }
+
+    //SEARCH TITLE
+    void searchBookByTitle(string title) {
+    vector<Book> tempBooks =
+        convertToVector();
+
+    Book* result =
+        Searching::linearSearchByTitle(
+            tempBooks,
+            title
+        );
+
+    if (result == nullptr) {
+
+        cout << endl;
+        cout << "[INFO] Book not found!" << endl;
+
+        return;
+    }
+
+    cout << endl;
+    cout << "===== SEARCH RESULT =====" << endl;
+
+    result->displayBook();
+    }
+
+    //SORT TITLE
+    void sortBooksByTitle() {
+
+    vector<Book> tempBooks =
+        convertToVector();
+
+    Sorting::quickSortByTitle(
+        tempBooks,
+        0,
+        tempBooks.size() - 1
+    );
+
+    cout << endl;
+    cout << "===== SORTED BY TITLE =====" << endl;
+
+    for (Book& book : tempBooks) {
+        book.displayBook();
+    }
+    }
+
+    // SORT STOCK
+    void sortBooksByStock() {
+    vector<Book> tempBooks =
+        convertToVector();
+
+    Sorting::mergeSortByStock(
+        tempBooks,
+        0,
+        tempBooks.size() - 1
+    );
+
+    cout << endl;
+    cout << "===== SORTED BY STOCK =====" << endl;
+
+    for (Book& book : tempBooks) {
+        book.displayBook();
+    }
+    }
+
 };
