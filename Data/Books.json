@@ -1,23 +1,23 @@
 [
     {
-        "author": "Robert Martin",
-        "category": "Programming",
         "id": 1,
-        "stock": 1,
-        "title": "Clean Code"
+        "title": "Clean Code",
+        "author": "Robert C. Martin",
+        "category": "Programming",
+        "stock": 3
     },
     {
+        "id": 2,
+        "title": "Introduction to Algorithms",
         "author": "CLRS",
         "category": "Computer Science",
-        "id": 2,
-        "stock": 5,
-        "title": "Algorithms"
+        "stock": 5
     },
     {
+        "id": 3,
+        "title": "Design Patterns",
         "author": "Gang of Four",
         "category": "Software Engineering",
-        "id": 3,
-        "stock": 1,
-        "title": "Design Patterns"
+        "stock": 2
     }
 ]
