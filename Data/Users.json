@@ -2,6 +2,7 @@
     {
         "username": "member",
         "book": "Clean Code",
-        "date": "2026-05-23"
+        "borrowDate": "2026-05-23",
+        "returnDate": "-"
     }
 ]
