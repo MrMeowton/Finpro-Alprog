@@ -7,20 +7,22 @@ using namespace std;
 
 class Admin : public User {
 public:
-    // Default Constructor
+
+    // constructor default
     Admin() : User() {}
 
-    // Parameterized Constructor
+    // constructor dengan parameter
     Admin(string username, string password)
         : User(username, password, "admin") {}
 
-    // Override Menu
+    // menu admin
     void showMenu() override {
+
         cout << endl;
         cout << "========== ADMIN MENU ==========" << endl;
         cout << "1. Add Book" << endl;
         cout << "2. Remove Book" << endl;
-        cout << "3. Update Book Stock" << endl;
+        cout << "3. Update Stock" << endl;
         cout << "4. View Transactions" << endl;
         cout << "5. Logout" << endl;
         cout << "================================" << endl;
