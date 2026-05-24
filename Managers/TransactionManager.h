@@ -1,114 +1,49 @@
 #pragma once
 
 #include <iostream>
-#include <fstream>
 
-#include "../models/Transaction.h"
-#include "../structures/LinkedList.h"
-#include "../networking/json.hpp"
-
-using json = nlohmann::json;
 using namespace std;
 
-class TransactionManager {
+class Transaction {
 private:
-    LinkedList<Transaction> transactions;
+    string username;
+    string bookTitle;
+    string type;
 
 public:
 
-    // tambah transaksi
-    void addTransaction(Transaction transaction) {
+    Transaction() {
 
-        transactions.insert(transaction);
-
-        cout << "\nTransaction saved!" << endl;
-
-        saveTransactions();
+        username = "";
+        bookTitle = "";
+        type = "";
     }
 
-    // tampilkan transaksi
-    void displayTransactions() {
+    Transaction(string username,
+                string bookTitle,
+                string type) {
 
-        if (transactions.isEmpty()) {
-
-            cout << "\nNo transactions available!" << endl;
-
-            return;
-        }
-
-        Node<Transaction>* current = transactions.getHead();
-
-        while (current != nullptr) {
-
-            current->data.displayTransaction();
-
-            cout << endl;
-
-            current = current->next;
-        }
+        this->username = username;
+        this->bookTitle = bookTitle;
+        this->type = type;
     }
 
-    // load transaksi dari json
-    void loadTransactions() {
-
-        ifstream file("data/transactions.json");
-
-        if (!file.is_open()) {
-
-            cout << "\nCannot open transactions.json!" << endl;
-
-            return;
-        }
-
-        json data;
-
-        file >> data;
-
-        for (auto& item : data) {
-
-            Transaction transaction(
-                item["username"],
-                item["book"],
-                item["type"]
-            );
-
-            transactions.insert(transaction);
-        }
-
-        file.close();
-
-        cout << "\nTransactions loaded successfully!" << endl;
+    string getUsername() {
+        return username;
     }
 
-    // simpan transaksi ke json
-    void saveTransactions() {
+    string getBookTitle() {
+        return bookTitle;
+    }
 
-        json data = json::array();
+    string getType() {
+        return type;
+    }
 
-        Node<Transaction>* current = transactions.getHead();
+    void displayTransaction() {
 
-        while (current != nullptr) {
-
-            json item;
-
-            item["username"] =
-                current->data.getUsername();
-
-            item["book"] =
-                current->data.getBookTitle();
-
-            item["type"] =
-                current->data.getType();
-
-            data.push_back(item);
-
-            current = current->next;
-        }
-
-        ofstream file("data/transactions.json");
-
-        file << data.dump(4);
-
-        file.close();
+        cout << "Username : " << username << endl;
+        cout << "Book     : " << bookTitle << endl;
+        cout << "Type     : " << type << endl;
     }
 };
