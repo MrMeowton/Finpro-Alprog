@@ -14,8 +14,10 @@ private:
     int stock;
 
 public:
-    // Default Constructor
+
+    // constructor default
     Book() {
+
         id = 0;
         title = "";
         author = "";
@@ -23,8 +25,13 @@ public:
         stock = 0;
     }
 
-    // Parameterized Constructor
-    Book(int id, string title, string author, string category, int stock) {
+    // constructor dengan parameter
+    Book(int id,
+         string title,
+         string author,
+         string category,
+         int stock) {
+
         this->id = id;
         this->title = title;
         this->author = author;
@@ -32,7 +39,7 @@ public:
         this->stock = stock;
     }
 
-    // Getter
+    // getter
     int getId() const {
         return id;
     }
@@ -53,19 +60,20 @@ public:
         return stock;
     }
 
-    // Setter
+    // setter stock
     void setStock(int stock) {
         this->stock = stock;
     }
 
-    // Display Book Information
+    // tampilkan data buku
     void displayBook() const {
+
         cout << "==========================" << endl;
-        cout << "Book ID   : " << id << endl;
-        cout << "Title     : " << title << endl;
-        cout << "Author    : " << author << endl;
-        cout << "Category  : " << category << endl;
-        cout << "Stock     : " << stock << endl;
+        cout << "ID       : " << id << endl;
+        cout << "Title    : " << title << endl;
+        cout << "Author   : " << author << endl;
+        cout << "Category : " << category << endl;
+        cout << "Stock    : " << stock << endl;
         cout << "==========================" << endl;
     }
 };
