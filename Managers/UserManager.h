@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+
 #include "../models/Admin.h"
 #include "../models/Member.h"
 
@@ -12,13 +13,16 @@ private:
     Member member;
 
 public:
-    // Constructor
+
+    // constructor
     UserManager() {
+
         admin = Admin("admin", "123");
+
         member = Member("member", "123");
     }
 
-    // Validate Login
+    // login user
     User* login(string username, string password) {
 
         if (admin.login(username, password)) {
@@ -28,6 +32,8 @@ public:
         if (member.login(username, password)) {
             return &member;
         }
+
+        cout << "\nUsername or password is wrong!" << endl;
 
         return nullptr;
     }
