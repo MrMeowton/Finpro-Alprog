@@ -7,17 +7,15 @@ using namespace std;
 
 class Member : public User {
 public:
-
-    // constructor default
+    // Default Constructor
     Member() : User() {}
 
-    // constructor dengan parameter
+    // Parameterized Constructor
     Member(string username, string password)
         : User(username, password, "member") {}
 
-    // menu member
+    // Override Menu
     void showMenu() override {
-
         cout << endl;
         cout << "========== MEMBER MENU ==========" << endl;
         cout << "1. View Books" << endl;

@@ -12,39 +12,30 @@ protected:
     string role;
 
 public:
-
-    // constructor default
+    // Default Constructor
     User() {
-
         username = "";
         password = "";
         role = "";
     }
 
-    // constructor dengan parameter
-    User(string username,
-         string password,
-         string role) {
-
+    // Parameterized Constructor
+    User(string username, string password, string role) {
         this->username = username;
         this->password = password;
         this->role = role;
     }
 
-    // destructor
+    // Virtual Destructor
     virtual ~User() {}
 
-    // validasi login
-    bool login(string inputUsername,
-               string inputPassword) {
-
-        return (
-            username == inputUsername &&
-            password == inputPassword
-        );
+    // Login Validation
+    bool login(string inputUsername, string inputPassword) {
+        return (username == inputUsername &&
+                password == inputPassword);
     }
 
-    // getter
+    // Getter
     string getUsername() const {
         return username;
     }
@@ -53,6 +44,6 @@ public:
         return role;
     }
 
-    // menu virtual
+    // Pure Virtual Function
     virtual void showMenu() = 0;
 };

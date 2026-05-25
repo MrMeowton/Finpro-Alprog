@@ -1,49 +1,38 @@
 #pragma once
 
 #include <iostream>
+#include "../models/Transaction.h"
+#include "../structures/LinkedList.h"
 
 using namespace std;
 
-class Transaction {
+class TransactionManager {
 private:
-    string username;
-    string bookTitle;
-    string type;
+    LinkedList<Transaction> transactions;
 
 public:
+    // Add Transaction
+    void addTransaction(Transaction transaction) {
+        transactions.insert(transaction);
 
-    Transaction() {
-
-        username = "";
-        bookTitle = "";
-        type = "";
+        cout << endl;
+        cout << "[SUCCESS] Transaction saved!" << endl;
     }
 
-    Transaction(string username,
-                string bookTitle,
-                string type) {
+    // Display Transactions
+    void displayTransactions() {
 
-        this->username = username;
-        this->bookTitle = bookTitle;
-        this->type = type;
-    }
+        if (transactions.isEmpty()) {
+            cout << endl;
+            cout << "[INFO] No transactions available." << endl;
+            return;
+        }
 
-    string getUsername() {
-        return username;
-    }
+        Node<Transaction>* current = transactions.getHead();
 
-    string getBookTitle() {
-        return bookTitle;
-    }
-
-    string getType() {
-        return type;
-    }
-
-    void displayTransaction() {
-
-        cout << "Username : " << username << endl;
-        cout << "Book     : " << bookTitle << endl;
-        cout << "Type     : " << type << endl;
+        while (current != nullptr) {
+            current->data.displayTransaction();
+            current = current->next;
+        }
     }
 };

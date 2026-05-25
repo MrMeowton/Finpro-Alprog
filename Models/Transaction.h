@@ -13,31 +13,28 @@ private:
     string returnDate;
 
 public:
-
-    // constructor default
+    // Default Constructor
     Transaction() {
-
         username = "";
         bookTitle = "";
         borrowDate = "";
-        returnDate = "-";
+        returnDate = "";
     }
 
-    // constructor dengan parameter
+    // Parameterized Constructor
     Transaction(
         string username,
         string bookTitle,
         string borrowDate,
         string returnDate = "-"
     ) {
-
         this->username = username;
         this->bookTitle = bookTitle;
         this->borrowDate = borrowDate;
         this->returnDate = returnDate;
     }
 
-    // getter
+    // Getter
     string getUsername() const {
         return username;
     }
@@ -54,20 +51,18 @@ public:
         return returnDate;
     }
 
-    // setter return date
+    // Setter
     void setReturnDate(string returnDate) {
-
         this->returnDate = returnDate;
     }
 
-    // tampilkan transaksi
+    // Display Transaction
     void displayTransaction() const {
-
         cout << "==============================" << endl;
-        cout << "Username    : " << username << endl;
-        cout << "Book Title  : " << bookTitle << endl;
-        cout << "Borrow Date : " << borrowDate << endl;
-        cout << "Return Date : " << returnDate << endl;
+        cout << "Username     : " << username << endl;
+        cout << "Book Title   : " << bookTitle << endl;
+        cout << "Borrow Date  : " << borrowDate << endl;
+        cout << "Return Date  : " << returnDate << endl;
         cout << "==============================" << endl;
     }
 };
