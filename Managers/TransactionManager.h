@@ -11,20 +11,20 @@ private:
     LinkedList<Transaction> transactions;
 
 public:
-    // Add Transaction
+    // Menambah transaksi
     void addTransaction(Transaction transaction) {
         transactions.insert(transaction);
 
         cout << endl;
-        cout << "[SUCCESS] Transaction saved!" << endl;
+        cout << "[SUCCESS] Transaksi disimpan!" << endl;
     }
 
-    // Display Transactions
+    // Menampilkan transaksi
     void displayTransactions() {
 
         if (transactions.isEmpty()) {
             cout << endl;
-            cout << "[INFO] No transactions available." << endl;
+            cout << "[INFO] Tidak ada transaksi." << endl;
             return;
         }
 
