@@ -17,23 +17,23 @@ private:
     LinkedList<Book> books;
 
 public:
-    // Add Book
+    // Menambah buku
     void addBook(Book book) {
         books.insert(book);
 
         cout << endl;
-        cout << "[SUCCESS] Book added successfully!" << endl;
+        cout << "[SUCCESS] Buku berhasil ditambahkan!" << endl;
 
         saveBooksToFile();
     }
 
-    // Display All Books
+    // Menampilkan semua buku
     void displayBooks() {
 
     if (books.isEmpty()) {
 
         cout << endl;
-        cout << "[INFO] No books available." << endl;
+        cout << "[INFO] Tidak ada buku yang tersedia." << endl;
 
         return;
     }
@@ -48,7 +48,7 @@ public:
     }
     }
 
-    // Search Book By ID
+    // Mencari buku melalui ID
     Book* searchBookById(int id) {
         Node<Book>* current = books.getHead();
 
@@ -63,45 +63,45 @@ public:
         return nullptr;
     }
 
-    // Borrow Book
+    // Meminjam buku
     bool borrowBook(int id) {
         Book* book = searchBookById(id);
 
         if (book == nullptr) {
             cout << endl;
-            cout << "[ERROR] Book not found!" << endl;
+            cout << "[ERROR] Buku tidak ditemukan!" << endl;
             return false;
         }
 
         if (book->getStock() <= 0) {
             cout << endl;
-            cout << "[ERROR] Book out of stock!" << endl;
+            cout << "[ERROR] Tidak ada stok buku!" << endl;
             return false;
         }
 
         book->setStock(book->getStock() - 1);
 
         cout << endl;
-        cout << "[SUCCESS] Book borrowed successfully!" << endl;
+        cout << "[SUCCESS] Buku berhasil dipinjam!" << endl;
 
         saveBooksToFile();
         return true;
     }
 
-    // Return Book
+    // Mengembalikan buku
     void returnBook(int id) {
         Book* book = searchBookById(id);
 
         if (book == nullptr) {
             cout << endl;
-            cout << "[ERROR] Book not found!" << endl;
+            cout << "[ERROR] Buku tidak ditemukan!" << endl;
             return;
         }
 
         book->setStock(book->getStock() + 1);
 
         cout << endl;
-        cout << "[SUCCESS] Book returned successfully!" << endl;
+        cout << "[SUCCESS] Buku berhasil dikembalikan!" << endl;
     }
 
     // TAMBAHAN PHASE 3
@@ -122,7 +122,7 @@ public:
     return tempBooks;
     }
 
-    //SEARCH TITLE
+    //MENCARI JUDUL
     void searchBookByTitle(string title) {
     vector<Book> tempBooks =
         convertToVector();
@@ -136,18 +136,18 @@ public:
     if (result == nullptr) {
 
         cout << endl;
-        cout << "[INFO] Book not found!" << endl;
+        cout << "[INFO] Buku tidak ditemukan!" << endl;
 
         return;
     }
 
     cout << endl;
-    cout << "===== SEARCH RESULT =====" << endl;
+    cout << "===== HASIL PENCARIAN =====" << endl;
 
     result->displayBook();
     }
 
-    //SORT TITLE
+    //MENGURUTKAN BERDASARKAN JUDUL
     void sortBooksByTitle() {
 
     vector<Book> tempBooks =
@@ -160,14 +160,14 @@ public:
     );
 
     cout << endl;
-    cout << "===== SORTED BY TITLE =====" << endl;
+    cout << "===== URUT BERDASARKAN JUDUL =====" << endl;
 
     for (Book& book : tempBooks) {
         book.displayBook();
     }
     }
 
-    // SORT STOCK
+    // MENGURUTKAN BERDASARKAN STOK
     void sortBooksByStock() {
     vector<Book> tempBooks =
         convertToVector();
@@ -179,7 +179,7 @@ public:
     );
 
     cout << endl;
-    cout << "===== SORTED BY STOCK =====" << endl;
+    cout << "===== URUT BERDASARKAN STOK =====" << endl;
 
     for (Book& book : tempBooks) {
         book.displayBook();
