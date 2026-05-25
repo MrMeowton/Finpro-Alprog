@@ -1,7 +1,7 @@
 #pragma once
 
-#include <iostream>
 #include <vector>
+#include <string>
 #include "../models/Book.h"
 
 using namespace std;
@@ -9,10 +9,7 @@ using namespace std;
 class Sorting {
 public:
 
-    // =========================
-    // QUICK SORT BY TITLE
-    // =========================
-
+    // menyortir berdasarkan judul buku menggunakan algoritma quick sort
     static int partitionByTitle(
         vector<Book>& books,
         int low,
@@ -67,9 +64,64 @@ public:
         }
     }
 
-    // =========================
-    // MERGE SORT BY STOCK
-    // =========================
+
+    // menyortir berdasarkan ID buku menggunakan algoritma quick sort
+
+    static int partitionById(
+        vector<Book>& books,
+        int low,
+        int high
+    ) {
+
+        int pivot = books[high].getId();
+
+        int i = low - 1;
+
+        for (int j = low; j < high; j++) {
+
+            if (books[j].getId() < pivot) {
+
+                i++;
+
+                swap(books[i], books[j]);
+            }
+        }
+
+        swap(books[i + 1], books[high]);
+
+        return i + 1;
+    }
+
+    static void quickSortById(
+        vector<Book>& books,
+        int low,
+        int high
+    ) {
+
+        if (low < high) {
+
+            int pivotIndex =
+                partitionById(
+                    books,
+                    low,
+                    high
+                );
+
+            quickSortById(
+                books,
+                low,
+                pivotIndex - 1
+            );
+
+            quickSortById(
+                books,
+                pivotIndex + 1,
+                high
+            );
+        }
+    }
+
+    // menyortir berdasarkan stok buku menggunakan algoritma merge sort
 
     static void merge(
         vector<Book>& books,
@@ -98,8 +150,11 @@ public:
 
         while (i < n1 && j < n2) {
 
-            if (leftArray[i].getStock()
-                <= rightArray[j].getStock()) {
+            if (
+                leftArray[i].getStock()
+                <=
+                rightArray[j].getStock()
+            ) {
 
                 books[k] = leftArray[i];
                 i++;
@@ -114,13 +169,17 @@ public:
         }
 
         while (i < n1) {
+
             books[k] = leftArray[i];
+
             i++;
             k++;
         }
 
         while (j < n2) {
+
             books[k] = rightArray[j];
+
             j++;
             k++;
         }
@@ -134,7 +193,8 @@ public:
 
         if (left < right) {
 
-            int mid = left + (right - left) / 2;
+            int mid =
+                left + (right - left) / 2;
 
             mergeSortByStock(
                 books,
