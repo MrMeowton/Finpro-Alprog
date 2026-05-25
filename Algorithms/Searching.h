@@ -3,15 +3,14 @@
 #include <iostream>
 #include <vector>
 #include "../models/Book.h"
+#include <string>
 
 using namespace std;
 
 class Searching {
 public:
 
-    // =========================
-    // LINEAR SEARCH BY TITLE
-    // =========================
+    // mencari berdasarkan judul dengan linear search
 
     static Book* linearSearchByTitle(
         vector<Book>& books,
@@ -28,9 +27,7 @@ public:
         return nullptr;
     }
 
-    // =========================
-    // LINEAR SEARCH BY AUTHOR
-    // =========================
+    // mencari berdasarkan author dengan linear search
 
     static Book* linearSearchByAuthor(
         vector<Book>& books,
@@ -47,14 +44,49 @@ public:
         return nullptr;
     }
 
-    // =========================
-    // BINARY SEARCH BY ID
-    // =========================
+    // mengecek apakah data sudah terurut berdasarkan ID
+
+    static bool isSortedById(
+        vector<Book>& books
+    ) {
+
+        for (int i = 0; i < books.size() - 1; i++) {
+
+            if (books[i].getId() > books[i + 1].getId()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    // mengecek apakah data sudah terurut berdasarkan title
+
+    static bool isSortedByTitle(
+        vector<Book>& books
+    ) {
+
+        for (int i = 0; i < books.size() - 1; i++) {
+
+            if (books[i].getTitle() > books[i + 1].getTitle()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    // mencari berdasarkan ID dengan binary search
 
     static Book* binarySearchById(
         vector<Book>& books,
         int targetId
     ) {
+
+        // cek apakah data sudah sorted
+        if (!isSortedById(books)) {
+            return nullptr;
+        }
 
         int left = 0;
         int right = books.size() - 1;
@@ -78,11 +110,23 @@ public:
         return nullptr;
     }
 
-    static Book* binarySearchByTitle(vector<Book>& books, string target) {
+    // mencari berdasarkan title dengan binary search
+
+    static Book* binarySearchByTitle(
+        vector<Book>& books,
+        string target
+    ) {
+
+        // cek apakah data sudah sorted
+        if (!isSortedByTitle(books)) {
+            return nullptr;
+        }
+
         int left = 0;
         int right = books.size() - 1;
 
         while (left <= right) {
+
             int mid = (left + right) / 2;
 
             if (books[mid].getTitle() == target) {
@@ -96,6 +140,7 @@ public:
                 right = mid - 1;
             }
         }
+
         return nullptr;
     }
 };
