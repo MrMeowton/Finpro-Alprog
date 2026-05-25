@@ -1,7 +1,7 @@
 [
     {
-        "username": "member",
-        "book": "Clean Code",
-        "date": "2026-05-23"
+        "username": "admin",
+        "password": "123",
+        "role": "admin"
     }
 ]
