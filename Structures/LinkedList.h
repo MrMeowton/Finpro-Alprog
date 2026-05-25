@@ -6,10 +6,12 @@ using namespace std;
 
 template <typename T>
 struct Node {
+
     T data;
     Node<T>* next;
 
     Node(T data) {
+
         this->data = data;
         this->next = nullptr;
     }
@@ -21,13 +23,16 @@ private:
     Node<T>* head;
 
 public:
+
     // Constructor
     LinkedList() {
         head = nullptr;
     }
 
     // Destructor
+
     ~LinkedList() {
+
         Node<T>* current = head;
 
         while (current != nullptr) {
@@ -37,8 +42,10 @@ public:
         }
     }
 
-    // Insert Node
+    // menambahkan node baru ke akhir linked list
+
     void insert(T data) {
+
         Node<T>* newNode = new Node<T>(data);
 
         if (head == nullptr) {
@@ -51,30 +58,21 @@ public:
         while (current->next != nullptr) {
             current = current->next;
         }
-
         current->next = newNode;
     }
 
-    // Get Head
-    Node<T>* getHead() const {
-        return head;
-    }
+    // transversal linked list
+    void display() const {
 
-    // Check Empty
-    bool isEmpty() const {
-        return head == nullptr;
-    }
-
-    // Count Size
-    int size() const {
-        int count = 0;
         Node<T>* current = head;
 
         while (current != nullptr) {
-            count++;
+
+            cout << current->data << " -> ";
+
             current = current->next;
         }
 
-        return count;
+        cout << "nullptr" << endl;
     }
 };

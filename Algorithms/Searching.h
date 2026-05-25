@@ -127,7 +127,7 @@ public:
 
         while (left <= right) {
 
-            int mid = (left + right) / 2;
+            int mid = left + (right - left) / 2;
 
             if (books[mid].getTitle() == target) {
                 return &books[mid];
